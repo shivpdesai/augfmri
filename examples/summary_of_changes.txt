@@ -1,0 +1,15 @@
+Source: Loads NIfTI images from a local directory specified by a hardcoded path (anat_path).
+File Handling: Uses Python’s glob to find both .nii and .nii.gz files.
+Preprocessing: Implements a custom resize_nifti function to adjust images to a common target shape (208×300×320).
+
+Conversion to 4D: After loading, images are converted into a 4D NIfTI image using new_img_like before applying the brain mask.
+Brain Masking: Applies a brain mask using NiftiMasker based on a local mask file (../data/hcp_mask.nii.gz).
+Atlas Integration: Fetches the Difumo atlas, transforms it, and checks the voxel count. If needed, it transposes the atlas to match the masked data shape.
+Reduction: Reduces data by performing matrix multiplication (X_masked @ C).
+
+
+Labels: Generates dummy labels that alternate between 0 and 1 (suitable for a binary classification demo).
+
+Function Encapsulation: Encapsulated within a main() function with a protective if __name__ == '__main__' block.
+Logging & Error Handling: Contains extensive logging (with emojis for clarity) and try/except blocks for robust error reporting.
+Multiprocessing Support: Uses multiprocessing.freeze_support() for compatibility with frozen executables.
